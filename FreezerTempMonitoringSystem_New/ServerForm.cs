@@ -24,6 +24,7 @@ namespace FreezerTempMonitoringSystem_New
         _FR8,
         _FR9,
         _FR10,
+        _FR11,
     }    
     
     public partial class ServerForm : Form
@@ -38,13 +39,13 @@ namespace FreezerTempMonitoringSystem_New
         private byte[] szData;        
 
         // Temp값 저장 할 변수
-        public double[] iDeviceTemp = { 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00 };
+        public double[] iDeviceTemp = { 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00 };
 
         // CONFIGURE LIST //////////////////////////////////////
         public class Configure_List
         {
-            public static double[] Configure_TempMin = { 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00 };
-            public static double[] Configure_TempMax = { 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00 };
+            public static double[] Configure_TempMin = { 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00 };
+            public static double[] Configure_TempMax = { 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00 };
         }
         ////////////////////////////////////////////////////////
 
@@ -358,6 +359,17 @@ namespace FreezerTempMonitoringSystem_New
 
                         // SQL server upload
                         HostConnection.Host_Set_TempHumi(hostEquipmentInfo, "10", "Temp1", iDeviceTemp[(byte)MODULE._FR10].ToString("0.00"));
+                    }
+                }
+                else if (sWords[0].Equals("FR-11", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    bool bChk = double.TryParse(sWords[1], out double dVal);
+                    if (bChk)
+                    {
+                        iDeviceTemp[(byte)MODULE._FR11] = dVal;
+
+                        // SQL server upload
+                        HostConnection.Host_Set_TempHumi(hostEquipmentInfo, "11", "Temp1", iDeviceTemp[(byte)MODULE._FR11].ToString("0.00"));
                     }
                 }
             }
